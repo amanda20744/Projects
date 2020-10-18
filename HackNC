@@ -1,0 +1,64 @@
+"""HackNC Hackathon! Made a program dealing with DNA!"""
+
+
+from typing import List
+
+
+def main() -> None:
+    where: str = input("Find corresponding DNA strand or errors in DNA? corresponding / errors ")
+    if where == "corresponding" or where == "Corresponding":
+        dna_string: str = input("Enter the strings of half a DNA strand: ")
+        print(f"The corresponding strand of DNA is: {return_base(dna_string)}")
+    elif where == "errors" or where == "Errors":
+        dna1: str = input("To find errors in your base pariing, enter the first half of a DNA strand: ")
+        dna2: str = input("Enter the second half of a DNA base strand: ")
+        find_error(dna1, dna2, len(dna1))
+    else:
+        print("Please respond with 'corresponding' or 'errors' to enter into program!")
+
+
+def return_base(dna_string: str) -> str:
+    """Given a string containing half the bases of DNA, return the corresponding half."""
+    corresponding_dna: str = ""
+    for i in range(len(dna_string)):
+        if dna_string[i] == 't':
+            corresponding_dna += "a"
+        elif dna_string[i] == 'a':
+            corresponding_dna += "t"
+        elif dna_string[i] == 'c':
+            corresponding_dna += "g"
+        elif dna_string[i] == 'g':
+            corresponding_dna += "c"
+        else:
+            return "Error! DNA strand has a non-DNA base."
+    return corresponding_dna
+
+
+def find_error(dna1: str, dna2: str, lenth_dna: int) -> None:
+    """Given a DNA sequence, return line number of where the error occurred in DNA base pairs."""
+    """Only works with mutations, not missing bases."""
+    i: int = 0
+    new_list: List[int] = []
+    if len(dna1) != len(dna2):
+        print("Length of the two corresponding strands do not match!")
+    else:
+        while i < lenth_dna:
+            if dna1[i] == "a" and dna2[i] == "t":
+                i += 1
+            elif dna1[i] == "c" and dna2[i] == "g":
+                i += 1
+            elif dna1[i] == "t" and dna2[i] == "a":
+                i += 1
+            elif dna1[i] == "g" and dna2[i] == "c":
+                i += 1
+            else:
+                i += 1
+                new_list.append(i)
+        if len(new_list) == 0:
+            print("There are no errors!")
+        else:
+            print(f"There are {len(new_list)} errors in lines: {new_list}")
+
+
+if __name__ == "__main__":
+    main()
